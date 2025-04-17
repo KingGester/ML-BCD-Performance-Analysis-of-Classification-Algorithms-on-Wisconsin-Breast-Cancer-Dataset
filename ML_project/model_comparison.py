@@ -19,7 +19,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, roc_curve, auc, classification_report
 from sklearn.pipeline import Pipeline
 
-# الگوریتم‌های طبقه‌بندی
+
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -27,7 +27,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 
-# تنظیمات نمودارها
+
 plt.style.use('seaborn-v0_8-whitegrid')
 plt.rcParams['figure.figsize'] = (14, 8)
 plt.rcParams['font.size'] = 12
@@ -41,10 +41,10 @@ def load_and_preprocess_data():
     y = bc.target
     feature_names = bc.feature_names
     
-    # تقسیم داده‌ها
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # نرمال‌سازی داده‌ها
+   
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
@@ -109,9 +109,10 @@ def visualize_cv_results(cv_results):
                     'Mean': np.mean(values),
                     'Std': np.std(values)
                 }, ignore_index=True)
-    
-    # ترسیم نمودار مقایسه‌ای
-    # 1. مقایسه دقت
+
+    # من در اینجا سعی کردم ترسیم نمودار مقایسه‌ رو انحام بدم
+
+    # 1
     plt.figure(figsize=(16, 10))
     accuracy_data = metrics_summary[metrics_summary['Metric'] == 'accuracy'].sort_values('Mean', ascending=False)
     
@@ -122,7 +123,7 @@ def visualize_cv_results(cv_results):
     plt.xlabel('Accuracy', fontsize=14)
     plt.xlim(0.9, 1.0)  # محدوده مناسب برای دید بهتر
     
-    # 2. مقایسه F1-Score
+    # 2
     plt.subplot(2, 2, 2)
     f1_data = metrics_summary[metrics_summary['Metric'] == 'f1'].sort_values('Mean', ascending=False)
     sns.barplot(x='Mean', y='Model', data=f1_data, 
@@ -131,7 +132,7 @@ def visualize_cv_results(cv_results):
     plt.xlabel('F1-Score', fontsize=14)
     plt.xlim(0.9, 1.0)
     
-    # 3. مقایسه ROC-AUC
+    # 3. ROC-AUC
     plt.subplot(2, 2, 3)
     roc_data = metrics_summary[metrics_summary['Metric'] == 'roc_auc'].sort_values('Mean', ascending=False)
     sns.barplot(x='Mean', y='Model', data=roc_data, 
@@ -158,7 +159,7 @@ def visualize_cv_results(cv_results):
     plt.savefig('cv_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    # نمودار رادار برای مقایسه جامع
+   
     plot_radar_chart(metrics_summary)
     
     return metrics_summary
@@ -168,29 +169,29 @@ def plot_radar_chart(metrics_summary):
     # انتخاب 4 مدل برتر بر اساس دقت
     top_models = metrics_summary[metrics_summary['Metric'] == 'accuracy'].sort_values('Mean', ascending=False).head(4)['Model'].unique()
     
-    # آماده‌سازی داده‌ها برای نمودار رادار
+    
     radar_data = metrics_summary[metrics_summary['Model'].isin(top_models)]
     
-    # تعریف معیارها و مدل‌ها
+  
     metrics = ['accuracy', 'precision', 'recall', 'f1', 'roc_auc']
     
-    # ترسیم نمودار رادار
+    
     plt.figure(figsize=(12, 10))
     
-    # تعداد متغیرها
+    
     n = len(metrics)
     
-    # زاویه هر محور
+   
     angles = [i / float(n) * 2 * np.pi for i in range(n)]
     angles += angles[:1]  # بستن نمودار
     
-    # ترسیم محورها
+    
     ax = plt.subplot(111, polar=True)
     
-    # افزودن برچسب‌ها
+    
     plt.xticks(angles[:-1], metrics, fontsize=14)
     
-    # رسم داده‌ها
+   
     for model in top_models:
         values = []
         for metric in metrics:
@@ -238,31 +239,31 @@ def hyperparameter_tuning(X, y):
         }
     }
     
-    # انجام Grid Search
+    
     best_models = {}
     
     for name, config in param_grids.items():
         print(f"تنظیم هایپرپارامترهای {name}...")
         
-        # تعریف pipeline برای نرمال‌سازی داده‌ها
+       
         pipeline = Pipeline([
             ('scaler', MinMaxScaler()),
             ('model', config['model'])
         ])
         
-        # تنظیم params برای pipeline
+        
         pipeline_params = {}
         for param, values in config['params'].items():
             pipeline_params[f'model__{param}'] = values
         
-        # انجام Grid Search
+       
         grid_search = GridSearchCV(
             pipeline, pipeline_params, cv=5, 
             scoring='accuracy', n_jobs=-1
         )
         grid_search.fit(X, y)
         
-        # ذخیره بهترین مدل و پارامترها
+       
         best_models[name] = {
             'model': grid_search.best_estimator_,
             'best_params': grid_search.best_params_,
@@ -282,12 +283,12 @@ def evaluate_final_models(X_train, X_test, y_train, y_test, best_models):
     for name, config in best_models.items():
         model = config['model']
         
-        # پیش‌بینی
+       
         y_pred_train = model.predict(X_train)
         y_pred_test = model.predict(X_test)
         y_prob_test = model.predict_proba(X_test)[:, 1]
         
-        # محاسبه معیارها
+        
         final_results[name] = {
             'accuracy': accuracy_score(y_test, y_pred_test),
             'precision': precision_score(y_test, y_pred_test),
@@ -301,7 +302,7 @@ def evaluate_final_models(X_train, X_test, y_train, y_test, best_models):
             'y_prob': y_prob_test
         }
         
-        # چاپ نتایج
+        
         print(f"\nنتایج نهایی برای {name}:")
         print(f"Accuracy: {final_results[name]['accuracy']:.4f}")
         print(f"Precision: {final_results[name]['precision']:.4f}")
@@ -312,7 +313,7 @@ def evaluate_final_models(X_train, X_test, y_train, y_test, best_models):
         print("\nClassification Report:")
         print(final_results[name]['classification_report'])
         
-        # ترسیم ماتریس اغتشاش
+        
         plt.figure(figsize=(10, 8))
         cm = final_results[name]['confusion_matrix']
         disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Malignant', 'Benign'])
@@ -321,7 +322,7 @@ def evaluate_final_models(X_train, X_test, y_train, y_test, best_models):
         plt.savefig(f'confusion_matrix_{name}.png', dpi=300, bbox_inches='tight')
         plt.close()
     
-    # ترسیم منحنی‌های ROC
+    
     plot_roc_curves(y_test, final_results)
     
     return final_results
@@ -375,7 +376,7 @@ def export_summary_report(cv_results, final_results, best_models):
                     'Value': value
                 }, ignore_index=True)
     
-    # پارامترهای بهینه
+   
     best_params_summary = pd.DataFrame()
     
     for model_name, config in best_models.items():
@@ -385,14 +386,14 @@ def export_summary_report(cv_results, final_results, best_models):
             'Best Parameters': str(config['best_params'])
         }, ignore_index=True)
     
-    # نوشتن گزارش
+    
     with open('model_comparison_report.md', 'w', encoding='utf-8') as f:
         f.write("# گزارش مقایسه جامع مدل‌های یادگیری ماشین\n\n")
         
         f.write("## 1. نتایج اعتبارسنجی متقاطع (Cross-Validation)\n\n")
         f.write("میانگین و انحراف معیار معیارهای مختلف با استفاده از اعتبارسنجی متقاطع 5-fold:\n\n")
         
-        # جدول میانگین دقت
+        
         f.write("### میانگین دقت (Accuracy)\n\n")
         accuracy_table = cv_summary[cv_summary['Metric'] == 'accuracy'].sort_values('Mean', ascending=False)[['Model', 'Mean', 'Std']]
         accuracy_table['Mean'] = accuracy_table['Mean'].map(lambda x: f"{x:.4f}")
@@ -400,7 +401,7 @@ def export_summary_report(cv_results, final_results, best_models):
         f.write(accuracy_table.to_markdown(index=False))
         f.write("\n\n")
         
-        # جدول میانگین F1-Score
+        # F1-Score
         f.write("### میانگین F1-Score\n\n")
         f1_table = cv_summary[cv_summary['Metric'] == 'f1'].sort_values('Mean', ascending=False)[['Model', 'Mean', 'Std']]
         f1_table['Mean'] = f1_table['Mean'].map(lambda x: f"{x:.4f}")
@@ -408,7 +409,7 @@ def export_summary_report(cv_results, final_results, best_models):
         f.write(f1_table.to_markdown(index=False))
         f.write("\n\n")
         
-        # جدول میانگین ROC-AUC
+       
         f.write("### میانگین ROC-AUC\n\n")
         roc_table = cv_summary[cv_summary['Metric'] == 'roc_auc'].sort_values('Mean', ascending=False)[['Model', 'Mean', 'Std']]
         roc_table['Mean'] = roc_table['Mean'].map(lambda x: f"{x:.4f}")
