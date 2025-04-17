@@ -19,7 +19,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 
-# تنظیمات نمودارها
+# در این جا میخوام تنظیمات نمودارها رو انجام بدم
 plt.style.use('seaborn-v0_8-whitegrid')
 plt.rcParams['figure.figsize'] = (14, 8)
 plt.rcParams['font.size'] = 12
@@ -32,7 +32,7 @@ def load_data():
     y = bc.target
     feature_names = bc.feature_names
     
-    # تبدیل به دیتافریم برای تحلیل بهتر
+    
     df = pd.DataFrame(X, columns=feature_names)
     df['target'] = y
     df['diagnosis'] = df['target'].map({0: 'Malignant', 1: 'Benign'})
@@ -41,10 +41,10 @@ def load_data():
 
 def feature_correlation(df, feature_names):
     """تحلیل همبستگی بین ویژگی‌ها"""
-    # محاسبه ماتریس همبستگی
+   
     corr_matrix = df[feature_names].corr()
     
-    # ترسیم نقشه حرارتی همبستگی
+    # ترسیم نقشه حرارتی همبستگی برای تحلیل 
     plt.figure(figsize=(18, 16))
     mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
     sns.heatmap(corr_matrix, mask=mask, annot=False, cmap='coolwarm', vmin=-1, vmax=1,
@@ -105,7 +105,7 @@ def univariate_feature_importance(X, y, feature_names):
     })
     mi_scores = mi_scores.sort_values('MI-Score', ascending=False).reset_index(drop=True)
     
-    # ترسیم نتایج
+    # در این جا من ترسیم های نتایج رو ایجاد کردم
     plt.figure(figsize=(18, 12))
     
     plt.subplot(2, 1, 1)
@@ -131,7 +131,7 @@ def model_based_feature_importance(X, y, feature_names):
     # تقسیم داده‌ها
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # نرمال‌سازی داده‌ها برای رگرسیون لجستیک
+    
     scaler = MinMaxScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     
@@ -163,7 +163,7 @@ def model_based_feature_importance(X, y, feature_names):
     })
     rfe_results = rfe_results.sort_values('Rank').reset_index(drop=True)
     
-    # ترسیم نتایج
+ 
     plt.figure(figsize=(18, 12))
     
     plt.subplot(2, 1, 1)
@@ -186,7 +186,7 @@ def model_based_feature_importance(X, y, feature_names):
 
 def feature_pairs_visualization(df, feature_names):
     """تجسم‌سازی جفت ویژگی‌های مهم"""
-    # انتخاب 5 ویژگی برتر از تحلیل Random Forest
+    #
     rf = RandomForestClassifier(n_estimators=100, random_state=42)
     rf.fit(df[feature_names], df['target'])
     top_features = pd.DataFrame({
@@ -196,7 +196,7 @@ def feature_pairs_visualization(df, feature_names):
     top_features = top_features.sort_values('Importance', ascending=False).reset_index(drop=True)
     top5_features = top_features.head(5)['Feature'].tolist()
     
-    # ترسیم نمودار پراکندگی برای جفت ویژگی‌های برتر
+    
     plt.figure(figsize=(20, 16))
     pair_idx = 1
     for i in range(len(top5_features)):
@@ -245,7 +245,7 @@ def write_report(high_corr, f_scores, mi_scores, rf_importances, lr_importances,
         
         f.write("## نتیجه‌گیری\n\n")
         
-        # تعیین ویژگی‌های مشترک در تمام روش‌ها
+        
         common_top10 = set(f_scores.head(10)['Feature']) & set(mi_scores.head(10)['Feature']) & \
                       set(rf_importances.head(10)['Feature']) & set(lr_importances.head(10)['Feature'])
         
