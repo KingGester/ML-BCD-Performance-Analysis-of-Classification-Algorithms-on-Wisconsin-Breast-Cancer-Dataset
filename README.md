@@ -1,4 +1,6 @@
 # ML-BCD-Performance-Analysis-of-Classification-Algorithms-on-Wisconsin-Breast-Cancer-Dataset
+
+📌 Scroll down for the English version ⬇️
 # مقایسه الگوریتم‌های یادگیری ماشین برای تشخیص سرطان سینه
 
 ## توضیحات پروژه
@@ -82,4 +84,103 @@ ML_project/
 ├── Model_Analysis.md          # گزارش تحلیلی مدل‌ها
 ├── README.md                  # مستندات پروژه
 └── requirements.txt           # وابستگی‌های پروژه
-``` 
+```
+# 🔬 Comparison of Machine Learning Algorithms for Breast Cancer Detection
+
+## Project Description
+This project compares the performance of various machine learning algorithms in predicting breast cancer using the standard Breast Cancer Wisconsin dataset. The main goal is to determine the most suitable algorithm for binary classification (benign vs. malignant).
+
+## Algorithms Used
+- Gaussian Naive Bayes  
+- K-Nearest Neighbors (KNN)  
+- Decision Tree  
+- Random Forest  
+- Support Vector Machine (SVM)  
+- Logistic Regression  
+- Gradient Boosting  
+
+## Project Features
+- Data preprocessing using MinMaxScaler  
+- K-fold cross-validation  
+- Evaluation with metrics: accuracy, precision, recall  
+- Comparative visualization of model results  
+- Confusion matrix analysis for top-performing models  
+- Feature importance analysis in tree-based models  
+- ROC curve comparisons  
+- Feature correlation analysis  
+
+## Key Results
+- **SVM** achieved the highest cross-validation accuracy: **98.24%**
+- **Logistic Regression** and **KNN** both scored **95.82%**
+- **Random Forest** performed best on the test set: **95.61%**
+- **Decision Tree** had the weakest performance: **90.99%**
+- Confusion matrix of Random Forest shows only 5 misclassified samples out of 114  
+- Feature importance analysis shows features related to **cell uniformity** and **nucleus size** were most impactful
+
+## How to Run
+1. Install the required packages:
+```bash
+pip install -r requirements.txt
+```
+2. Run the main Jupyter Notebook:
+```bash
+jupyter notebook project1.ipynb
+```
+3. Run additional analysis:
+```bash
+jupyter notebook Additional_Analysis.ipynb
+```
+4.Run model comparison script:
+```bash
+python model_comparison.py
+```
+5. Run feature analysis script::
+```bash
+python feature_analysis.py
+
+Cross-Validation Results (K=5)
+Support Vector Machine: 98.24% (±0.88%)
+
+Logistic Regression: 95.82% (±1.62%)
+
+K-Nearest Neighbors: 95.82% (±2.13%)
+
+Gradient Boosting: 95.38% (±1.28%)
+
+Random Forest: 95.16% (±1.32%)
+
+Naive Bayes: 93.41% (±2.09%)
+
+Decision Tree: 90.99% (±2.13%)
+
+Technologies Used
+Python 3.13.2
+
+scikit-learn
+
+pandas
+
+numpy
+
+matplotlib
+
+seaborn
+
+jupyter
+
+StandardScaler & MinMaxScaler for normalization
+
+Project Structure
+
+ML_project/
+├── project1.ipynb             # Main project notebook
+├── model_comparison.py        # Model comparison script
+├── feature_analysis.py        # Feature analysis script
+├── Additional_Analysis.ipynb  # Additional analysis notebook
+├── Model_Analysis.md          # Analytical report
+├── README.md                  # Project documentation
+└── requirements.txt           # Project dependencies
+
+
+
+
