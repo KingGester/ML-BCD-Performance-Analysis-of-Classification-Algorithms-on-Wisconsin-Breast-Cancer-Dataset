@@ -37,7 +37,7 @@ jupyter notebook project1.ipynb
 ```
 
 ## تکنولوژی‌های استفاده شده
-- Python 3.x
+- Python 3.13.2
 - scikit-learn
 - pandas
 - numpy
