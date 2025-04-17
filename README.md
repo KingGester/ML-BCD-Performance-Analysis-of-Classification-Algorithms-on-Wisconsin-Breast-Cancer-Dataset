@@ -171,7 +171,7 @@ jupyter
 StandardScaler & MinMaxScaler for normalization
 
 Project Structure
-
+```
 ML_project/
 ├── project1.ipynb             # Main project notebook
 ├── model_comparison.py        # Model comparison script
@@ -180,7 +180,7 @@ ML_project/
 ├── Model_Analysis.md          # Analytical report
 ├── README.md                  # Project documentation
 └── requirements.txt           # Project dependencies
-
+```
 
 
 
