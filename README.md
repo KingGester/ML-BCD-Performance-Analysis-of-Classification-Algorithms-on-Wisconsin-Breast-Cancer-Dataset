@@ -77,13 +77,13 @@ python feature_analysis.py
 ## ساختار پروژه
 ```
 ML_project/
-├── project1.ipynb             # نوت‌بوک اصلی پروژه
-├── model_comparison.py        # اسکریپت مقایسه جامع مدل‌ها
-├── feature_analysis.py        # اسکریپت تحلیل ویژگی‌ها
-├── Additional_Analysis.ipynb  # نوت‌بوک تحلیل‌های اضافی
-├── Model_Analysis.md          # گزارش تحلیلی مدل‌ها
-├── README.md                  # مستندات پروژه
-└── requirements.txt           # وابستگی‌های پروژه
+├── project1.ipynb             
+├── model_comparison.py        
+├── feature_analysis.py        
+├── Additional_Analysis.ipynb  
+├── Model_Analysis.md          
+├── README.md                  
+└── requirements.txt           
 ```
 # 🔬 Comparison of Machine Learning Algorithms for Breast Cancer Detection
 
@@ -173,13 +173,13 @@ StandardScaler & MinMaxScaler for normalization
 Project Structure
 ```
 ML_project/
-├── project1.ipynb             # Main project notebook
-├── model_comparison.py        # Model comparison script
-├── feature_analysis.py        # Feature analysis script
-├── Additional_Analysis.ipynb  # Additional analysis notebook
-├── Model_Analysis.md          # Analytical report
-├── README.md                  # Project documentation
-└── requirements.txt           # Project dependencies
+├── project1.ipynb             
+├── model_comparison.py        
+├── feature_analysis.py        
+├── Additional_Analysis.ipynb  
+├── Model_Analysis.md          
+├── README.md                  
+└── requirements.txt           
 ```
 
 
